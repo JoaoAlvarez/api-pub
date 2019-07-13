@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @EnableAutoConfiguration
-@ComponentScan("com.projeto.loja.resources")
+@ComponentScan({"com.projeto.loja.resources","com.projeto.loja.services"})
 public class ProjetoLojaApplication {
 
 	public static void main(String[] args) {

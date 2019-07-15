@@ -3,10 +3,12 @@ package com.projeto.loja.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.projeto.loja.domain.Categoria;
 import com.projeto.loja.repositories.CategoriaRepository;
+import com.projeto.loja.services.execptions.DataIntegrityException;
 import com.projeto.loja.services.execptions.ObjectNotFoundException;
 
 @Service
@@ -30,5 +32,15 @@ public class CategoriaService {
 		/*Caso nao encontre o id do obj ele retorna uma excecao*/
 		find(obj.getId());
 		return repositorio.save(obj);
+	}
+	
+	public void delete(Integer id) {
+		/*Caso nao encontre o id do obj ele retorna uma excecao*/
+		find(id);
+		try {
+			repositorio.deleteById(id);			
+		}catch(DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possivel remover uma Cetegoria que possue produtos");
+		}
 	}
 }

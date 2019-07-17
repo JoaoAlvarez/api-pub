@@ -34,10 +34,15 @@ public class CategoriaService {
 	}
 	
 	public Categoria update(Categoria obj) {
-		/*Caso nao encontre o id do obj ele retorna uma excecao*/
-		find(obj.getId());
-		return repositorio.save(obj);
+		/* Caso nao encontre o id do obj ele retorna uma excecao */
+		Categoria newObj = find(obj.getId());
+		updateData(newObj, obj);
+		return repositorio.save(newObj);
 	}
+
+	 private void updateData(Categoria newObj, Categoria obj) {
+		 newObj.setNome(obj.getNome());
+	 }
 	
 	public void delete(Integer id) {
 		/*Caso nao encontre o id do obj ele retorna uma excecao*/

@@ -8,10 +8,10 @@
 		<version>2.1.6.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.projeto.loja</groupId>
-	<artifactId>projeto-loja</artifactId>
+	<groupId>br.com.api</groupId>
+	<artifactId>api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>projeto-loja</name>
+	<name>api</name>
 	<description>Project for Spring Boot</description>
 
 	<properties>

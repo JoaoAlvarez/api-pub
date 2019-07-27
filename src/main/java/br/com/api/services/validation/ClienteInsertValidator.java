@@ -7,7 +7,6 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import br.com.api.domain.Cliente;
 import br.com.api.domain.enums.TipoCliente;
 import br.com.api.dto.ClienteNewDTO;
 import br.com.api.repositories.ClienteRepository;
@@ -40,8 +39,7 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
 			list.add(new FieldMessage("email", "Email ja existente"));
 		}
 		
-		Cliente aux = repositorio.findByCpfCnpj(objDto.getCpfCnpj());
-		if (aux!=null) {
+		if (repositorio.findByCpfCnpj(objDto.getCpfCnpj())!=null) {
 			list.add(new FieldMessage("cpfCnpj", "Cpf/Cnpj já existente"));
 		}
 		

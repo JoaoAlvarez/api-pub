@@ -28,16 +28,6 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
 
 		List<FieldMessage> list = new ArrayList<>();
 
-		/*
-		 * if(objDto.getTipo().equals(TipoCliente.PESSOA_FISICA.getCod()) &&
-		 * !BR.isValidCPF(objDto.getCpfCnpj())) { list.add(new
-		 * FieldMessage("cpfCnpj","Cpf inválido")); }
-		 * 
-		 * if(objDto.getTipo().equals(TipoCliente.PESSOA_JURIDICA.getCod()) &&
-		 * !BR.isValidCNPJ(objDto.getCpfCnpj())) { list.add(new
-		 * FieldMessage("cpfCnpj","CNPJ inválido")); }
-		 */
-			
 		if (objDto.getTipo().equals(TipoCliente.PESSOA_FISICA.getCod()) && !BR.isValidCPF(objDto.getCpfCnpj())) {
 			list.add(new FieldMessage("cpfCnpj", "CPF inválido"));
 		}

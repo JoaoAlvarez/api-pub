@@ -19,7 +19,7 @@ import br.com.api.domain.enums.EstadoPagamento;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
-@JsonSubTypes({@JsonSubTypes.Type(value = PagamentoBoleto.class, name = "pagamentoBoleto"),
+@JsonSubTypes({@JsonSubTypes.Type(value = PagamentoDinheiro.class, name = "pagamentoDinheiro"),
     @JsonSubTypes.Type(value = PagamentoCartao.class, name = "pagamentoCartao")
 })
 public abstract class Pagamento implements Serializable{
@@ -28,20 +28,22 @@ public abstract class Pagamento implements Serializable{
 	@Id
 	private Integer id;
 	private Integer estado;
+	private Double valor;
 	
 	@JsonIgnore
 	@OneToOne
-	@JoinColumn(name="pedido_id")
+	@JoinColumn(name="conta_id")
 	@MapsId
-	private Pedido pedido;
+	private Conta conta;
 
 	public Pagamento() {}
 	
-	public Pagamento(Integer id, EstadoPagamento estado, Pedido pedido) {
+	public Pagamento(Integer id, EstadoPagamento estado, Conta conta, Double valor) {
 		super();
 		this.id = id;
 		this.estado = (estado == null) ? null : estado.getCod();
-		this.pedido = pedido;
+		this.conta = conta;
+		this.valor = valor;
 	}
 
 	public Integer getId() {
@@ -60,12 +62,20 @@ public abstract class Pagamento implements Serializable{
 		this.estado = estado.getCod();
 	}
 
-	public Pedido getPedido() {
-		return pedido;
+	public Conta getConta() {
+		return conta;
 	}
 
-	public void setPedido(Pedido pedido) {
-		this.pedido = pedido;
+	public void setConta(Conta conta) {
+		this.conta = conta;
+	}
+
+	public Double getValor() {
+		return valor;
+	}
+
+	public void setValor(Double valor) {
+		this.valor = valor;
 	}
 
 	@Override

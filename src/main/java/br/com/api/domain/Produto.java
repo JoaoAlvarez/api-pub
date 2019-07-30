@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,9 +26,17 @@ public class Produto implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	@Column(unique=true)
+	private String codigo;
+	
+	@Column(unique=true)
 	private String nome;
 	
-	private Double preco;
+	private Double precoCusto;
+	
+	private Double precoVenda;
+	
+	private Integer quantidadeEstoque;
 	
 	@JsonIgnore
 	@ManyToMany
@@ -39,22 +48,57 @@ public class Produto implements Serializable{
 	
 	@JsonIgnore
 	@OneToMany(mappedBy="id.produto")
-	private Set<ItemPedido> itens = new HashSet<>();
+	private Set<ItemConta> itens = new HashSet<>();
 	
 	public Produto() {}
 	
-	public Produto(Integer id, String nome, Double preco) {
+	
+	public Produto(Integer id, String nome, String codigo, Double precoCusto, Double precoVenda, Integer quantidadeEstoque) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.preco = preco;
+		this.codigo = codigo;
+		this.precoCusto = precoCusto;
+		this.precoVenda = precoVenda;
+		this.quantidadeEstoque = quantidadeEstoque;
 	}
-	
+
+
+	public Double getPrecoCusto() {
+		return precoCusto;
+	}
+
+
+	public void setPrecoCusto(Double precoCusto) {
+		this.precoCusto = precoCusto;
+	}
+
+
+	public Double getPrecoVenda() {
+		return precoVenda;
+	}
+
+
+	public void setPrecoVenda(Double precoVenda) {
+		this.precoVenda = precoVenda;
+	}
+
+
+	public Integer getQuantidadeEstoque() {
+		return quantidadeEstoque;
+	}
+
+
+	public void setQuantidadeEstoque(Integer quantidadeEstoque) {
+		this.quantidadeEstoque = quantidadeEstoque;
+	}
+
+
 	@JsonIgnore
-	public List<Pedido> getPedidos(){
-		List<Pedido> lista = new ArrayList<>();
-		for (ItemPedido itenPedido : itens) {
-			lista.add(itenPedido.getPedido());
+	public List<Conta> getPedidos(){
+		List<Conta> lista = new ArrayList<>();
+		for (ItemConta itenPedido : itens) {
+			lista.add(itenPedido.getConta());
 		}
 		return lista;
 	}
@@ -75,14 +119,6 @@ public class Produto implements Serializable{
 		this.nome = nome;
 	}
 
-	public Double getPreco() {
-		return preco;
-	}
-
-	public void setPreco(Double preco) {
-		this.preco = preco;
-	}
-
 	public List<Categoria> getCategorias() {
 		return categorias;
 	}
@@ -91,12 +127,20 @@ public class Produto implements Serializable{
 		this.categorias = categorias;
 	}
 
-	public Set<ItemPedido> getItens() {
+	public Set<ItemConta> getItens() {
 		return itens;
 	}
 
-	public void setItens(Set<ItemPedido> itens) {
+	public void setItens(Set<ItemConta> itens) {
 		this.itens = itens;
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
 
 	@Override

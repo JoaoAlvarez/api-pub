@@ -37,4 +37,8 @@ public class ProdutoService {
 		return produtoRepositorio.findDistinctByNomeContainingAndCategoriasIn(nome, categorias, pageRequest);
 		
 	}
+	
+	public Produto insert(Produto obj) {
+		return produtoRepositorio.save(obj);
+	}
 }

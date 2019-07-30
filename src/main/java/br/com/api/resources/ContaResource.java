@@ -13,24 +13,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.api.domain.Pedido;
-import br.com.api.services.PedidoService;
+import br.com.api.domain.Conta;
+import br.com.api.services.ContaService;
 
 @RestController
-@RequestMapping(value="/pedido")
-public class PedidoResource {
+@RequestMapping(value="/conta")
+public class ContaResource {
 
 	@Autowired
-	private PedidoService service;
+	private ContaService service;
 	
 	@RequestMapping(value="/{id}",  method=RequestMethod.GET)
-	public ResponseEntity<Pedido> find(@PathVariable Integer id) {
-		Pedido c = service.find(id);
+	public ResponseEntity<Conta> find(@PathVariable Integer id) {
+		Conta c = service.find(id);
 		return ResponseEntity.ok().body(c);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody Pedido obj){
+	public ResponseEntity<Void> insert(@Valid @RequestBody Conta obj){
 		obj = service.insert(obj);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -38,4 +38,11 @@ public class PedidoResource {
 		
 		return ResponseEntity.created(uri).build();
 	}
+	
+	@RequestMapping(method=RequestMethod.PUT)
+	public ResponseEntity<Conta> inserirItem(@PathVariable Integer contaId, @PathVariable Integer produtoId, @PathVariable Integer quantidade){
+		Conta c = service.insertItem(contaId, produtoId, quantidade);
+		return ResponseEntity.ok().body(c);
+	}
+	
 }

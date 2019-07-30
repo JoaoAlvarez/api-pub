@@ -9,29 +9,17 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import br.com.api.domain.enums.EstadoPagamento;
 
 @Entity
-public class PagamentoBoleto extends Pagamento{
+public class PagamentoDinheiro extends Pagamento{
 	private static final long serialVersionUID = 1L;
-	
-	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
-	private Date dataVencimento;
 	
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date dataPagamento;
 	
-	public PagamentoBoleto() {}
+	public PagamentoDinheiro() {}
 	
-	public PagamentoBoleto(Integer id, EstadoPagamento estado, Pedido pedido, Date dataVencimento, Date dataPagamento) {
-		super(id, estado, pedido);
-		this.dataVencimento = dataVencimento;
+	public PagamentoDinheiro(Integer id, EstadoPagamento estado, Conta pedido, Double valor, Date dataPagamento) {
+		super(id, estado, pedido, valor);
 		this.dataPagamento = dataPagamento;
-	}
-
-	public Date getDataVencimento() {
-		return dataVencimento;
-	}
-
-	public void setDataVencimento(Date dataVencimento) {
-		this.dataVencimento = dataVencimento;
 	}
 
 	public Date getDataPagamento() {

@@ -10,24 +10,27 @@ import org.springframework.stereotype.Service;
 import br.com.api.domain.Categoria;
 import br.com.api.domain.Cidade;
 import br.com.api.domain.Cliente;
+import br.com.api.domain.Conta;
+import br.com.api.domain.ContaComanda;
+import br.com.api.domain.ContaMesa;
 import br.com.api.domain.Endereco;
 import br.com.api.domain.Estado;
-import br.com.api.domain.ItemPedido;
+import br.com.api.domain.ItemConta;
 import br.com.api.domain.Pagamento;
-import br.com.api.domain.PagamentoBoleto;
 import br.com.api.domain.PagamentoCartao;
-import br.com.api.domain.Pedido;
+import br.com.api.domain.PagamentoDinheiro;
 import br.com.api.domain.Produto;
 import br.com.api.domain.enums.EstadoPagamento;
 import br.com.api.domain.enums.TipoCliente;
+import br.com.api.domain.enums.TipoConta;
 import br.com.api.repositories.CategoriaRepository;
 import br.com.api.repositories.CidadeRepository;
 import br.com.api.repositories.ClienteRepository;
+import br.com.api.repositories.ContaRepository;
 import br.com.api.repositories.EnderecoRepository;
 import br.com.api.repositories.EstadoRepository;
-import br.com.api.repositories.ItemPedidoRepository;
+import br.com.api.repositories.ItemContaRepository;
 import br.com.api.repositories.PagamentoRepository;
-import br.com.api.repositories.PedidoRepository;
 import br.com.api.repositories.ProdutoRepository;
 
 @Service
@@ -46,11 +49,11 @@ public class DBService {
 	@Autowired
 	private EnderecoRepository enderecoRepository;
 	@Autowired
-	private PedidoRepository pedidoRepository;
+	private ContaRepository pedidoRepository;
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
 	@Autowired
-	private ItemPedidoRepository itemPedidoRepository;
+	private ItemContaRepository itemPedidoRepository;
 
 	public void instantiateTestDatabase() throws ParseException {
 
@@ -62,17 +65,17 @@ public class DBService {
 		Categoria cat6 = new Categoria(null, "Decoração");
 		Categoria cat7 = new Categoria(null, "Perfumaria");
 
-		Produto p1 = new Produto(null, "Computador", 2000.00);
-		Produto p2 = new Produto(null, "Impressora", 800.00);
-		Produto p3 = new Produto(null, "Mouse", 80.00);
-		Produto p4 = new Produto(null, "Mesa de escritório", 300.00);
-		Produto p5 = new Produto(null, "Toalha", 50.00);
-		Produto p6 = new Produto(null, "Colcha", 200.00);
-		Produto p7 = new Produto(null, "TV true color", 1200.00);
-		Produto p8 = new Produto(null, "Roçadeira", 800.00);
-		Produto p9 = new Produto(null, "Abajour", 100.00);
-		Produto p10 = new Produto(null, "Pendente", 180.00);
-		Produto p11 = new Produto(null, "Shampoo", 90.00);
+		Produto p1 = new Produto(null, "Computador","comp", 1000.00, 2000.00, 20);
+		Produto p2 = new Produto(null, "Impressora","imp",400.00, 800.00, 1);
+		Produto p3 = new Produto(null, "Mouse", "mous",40.0,80.00, 5);
+		Produto p4 = new Produto(null, "Mesa de escritório","m-escr" ,150.0,300.00, 0);
+		Produto p5 = new Produto(null, "Toalha","toal",2.0, 50.00, 15);
+		Produto p6 = new Produto(null, "Colcha","col" ,100.0,200.00,5);
+		Produto p7 = new Produto(null, "TV true color","tvc",600.0, 1200.00,8);
+		Produto p8 = new Produto(null, "Roçadeira", "roç",400.0,800.00,7);
+		Produto p9 = new Produto(null, "Abajour", "aba",50.0, 100.00,12);
+		Produto p10 = new Produto(null, "Pendente", "pend",60.0, 180.00,5);
+		Produto p11 = new Produto(null, "Shampoo","shamp",30.0, 90.00,0);
 
 		cat1.getProdutos().addAll(Arrays.asList(p1, p2, p3));
 		cat2.getProdutos().addAll(Arrays.asList(p2, p4));
@@ -110,7 +113,8 @@ public class DBService {
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 
-		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "36378912377", TipoCliente.PESSOA_FISICA);
+		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "36378912377", TipoCliente.PESSOAFISICA);
+		Cliente cli2 = new Cliente(null, "Cliente Generico", "cliente@cliente.com", "36378912377", TipoCliente.PESSOAFISICA);
 
 		cli1.getTelefones().addAll(Arrays.asList("27363323", "93838393"));
 
@@ -119,28 +123,30 @@ public class DBService {
 
 		cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
 
-		clienteRepository.saveAll(Arrays.asList(cli1));
+		clienteRepository.saveAll(Arrays.asList(cli1,cli2));
 		enderecoRepository.saveAll(Arrays.asList(e1, e2));
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
-		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, e2);
+		Conta ped1 = new Conta(null, TipoConta.COMPRA_LIVRE, sdf.parse("30/09/2017 10:32"), e1);
+		Conta ped2 = new Conta(null, TipoConta.COMPRA_LIVRE, sdf.parse("10/10/2017 19:35"), e2);
+		ContaComanda ped3 = new ContaComanda(null, TipoConta.CONTA_COMANDA, sdf.parse("10/10/2017 19:35"), null, cli1);
+		ContaMesa ped4 = new ContaMesa(null, TipoConta.CONTA_MESA, sdf.parse("10/10/2017 19:35"), null, 2);
 
-		Pagamento pagto1 = new PagamentoCartao(null, EstadoPagamento.QUITADO, ped1, 6);
+		Pagamento pagto1 = new PagamentoCartao(null, EstadoPagamento.QUITADO, ped1, 500.0, 6);
 		ped1.setPagamento(pagto1);
 
-		Pagamento pagto2 = new PagamentoBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("20/10/2017 00:00"), null);
+		Pagamento pagto2 = new PagamentoDinheiro(null, EstadoPagamento.PENDENTE, ped2, null, null);
 		ped2.setPagamento(pagto2);
 
-		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2, ped3));
 
-		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+		pedidoRepository.saveAll(Arrays.asList(ped1, ped2, ped3, ped4));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
 
-		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
-		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
-		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+		ItemConta ip1 = new ItemConta(ped1, p1, 0.00, 1);
+		ItemConta ip2 = new ItemConta(ped1, p3, 0.00, 2);
+		ItemConta ip3 = new ItemConta(ped2, p2, 100.00, 1);
 
 		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
 		ped2.getItens().addAll(Arrays.asList(ip3));

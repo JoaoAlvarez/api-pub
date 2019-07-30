@@ -17,45 +17,45 @@ import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import br.com.api.domain.enums.TipoConta;
+
 @Entity
-public class Pedido implements Serializable{
+public class Conta implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	private Integer tipoConta;
+	
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
-	private Date instante;
+	private Date abertura;
 	
-	@OneToOne(cascade=CascadeType.ALL, mappedBy="pedido")
+	@OneToOne(cascade=CascadeType.ALL, mappedBy="conta")
 	private Pagamento pagamento;
-	
-	@ManyToOne
-	@JoinColumn(name="cliente_id")
-	private Cliente cliente;
-	
+
 	@ManyToOne
 	@JoinColumn(name="endereco_entrega_id")
 	private Endereco enderecoDeEntrega;
 
-	@OneToMany(mappedBy="id.pedido")
-	private Set<ItemPedido> itens = new HashSet<>();
+	@OneToMany(mappedBy="id.conta")
+	private Set<ItemConta> itens = new HashSet<>();
 	
-	public Pedido() {}
+	public Conta() {}
 
-	public Pedido(Integer id, Date instante, Cliente cliente, Endereco enderecoDeEntrega) {
+	public Conta(Integer id, TipoConta tipoConta, Date abertura, Endereco enderecoDeEntrega) {
 		super();
 		this.id = id;
-		this.instante = instante;
-		this.cliente = cliente;
+		this.abertura = abertura;
 		this.enderecoDeEntrega = enderecoDeEntrega;
+		this.tipoConta = (tipoConta == null) ? null : tipoConta.getCod();
 	}
 	
 	public double getValorTotal() {
 		double soma = 0.0;
-		for (ItemPedido itemPedido : itens) {
-			soma += itemPedido.getSubTotal();
+		for (ItemConta itemConta : itens) {
+			soma += itemConta.getSubTotal();
 		}
 		return soma;
 	}
@@ -68,12 +68,12 @@ public class Pedido implements Serializable{
 		this.id = id;
 	}
 
-	public Date getInstante() {
-		return instante;
+	public Date getAbertura() {
+		return abertura;
 	}
 
-	public void setInstante(Date instante) {
-		this.instante = instante;
+	public void setAbertura(Date abertura) {
+		this.abertura = abertura;
 	}
 
 	public Pagamento getPagamento() {
@@ -84,14 +84,6 @@ public class Pedido implements Serializable{
 		this.pagamento = pagamento;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
 	public Endereco getEnderecoDeEntrega() {
 		return enderecoDeEntrega;
 	}
@@ -100,12 +92,20 @@ public class Pedido implements Serializable{
 		this.enderecoDeEntrega = enderecoDeEntrega;
 	}
 	
-	public Set<ItemPedido> getItens() {
+	public Set<ItemConta> getItens() {
 		return itens;
 	}
 
-	public void setItens(Set<ItemPedido> itens) {
+	public void setItens(Set<ItemConta> itens) {
 		this.itens = itens;
+	}
+	
+	public TipoConta getTipoConta() {
+		return TipoConta.toEnum(tipoConta);
+	}
+
+	public void setEstado(TipoConta tipoConta) {
+		this.tipoConta = tipoConta.getCod();
 	}
 	
 	@Override
@@ -124,7 +124,7 @@ public class Pedido implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Pedido other = (Pedido) obj;
+		Conta other = (Conta) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

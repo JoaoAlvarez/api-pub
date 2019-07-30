@@ -2,8 +2,9 @@ package br.com.api.domain.enums;
 
 public enum TipoCliente {
 	
-	PESSOA_FISICA(1,"Pessoa Física"),
-	PESSOA_JURIDICA(2,"Pessoa Jurídica");
+	PESSOAFISICA(1,"Pessoa Física"),
+	PESSOAJURIDICA(2,"Pessoa Jurídica"),
+	CLIENTEGENERICO(3,"Cliente Generico");
 	
 	private int cod;
 	private String descricao;

@@ -8,23 +8,23 @@ import javax.persistence.ManyToOne;
 
 /*Anotacao embeddable serve pra dizer que essa entidade vai ser uma tabela de referencia entre tabelas*/
 @Embeddable 
-public class ItemPedidoPK implements Serializable{
+public class ItemContaPK implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@ManyToOne
-	@JoinColumn(name="pedido_id")
-	private Pedido pedido;
+	@JoinColumn(name="conta_id")
+	private Conta conta;
 	
 	@ManyToOne
 	@JoinColumn(name="produto_id")
 	private Produto produto;
 	
-	public Pedido getPedido() {
-		return pedido;
+	public Conta getConta() {
+		return conta;
 	}
 	
-	public void setPedido(Pedido pedido) {
-		this.pedido = pedido;
+	public void setConta(Conta conta) {
+		this.conta = conta;
 	}
 	
 	public Produto getProduto() {
@@ -39,7 +39,7 @@ public class ItemPedidoPK implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((pedido == null) ? 0 : pedido.hashCode());
+		result = prime * result + ((conta == null) ? 0 : conta.hashCode());
 		result = prime * result + ((produto == null) ? 0 : produto.hashCode());
 		return result;
 	}
@@ -52,11 +52,11 @@ public class ItemPedidoPK implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ItemPedidoPK other = (ItemPedidoPK) obj;
-		if (pedido == null) {
-			if (other.pedido != null)
+		ItemContaPK other = (ItemContaPK) obj;
+		if (conta == null) {
+			if (other.conta != null)
 				return false;
-		} else if (!pedido.equals(other.pedido))
+		} else if (!conta.equals(other.conta))
 			return false;
 		if (produto == null) {
 			if (other.produto != null)

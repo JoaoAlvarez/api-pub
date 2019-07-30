@@ -11,7 +11,11 @@ public class ProdutoDTO implements Serializable{
 	
 	private String nome;
 	
-	private Double preco;
+	private Double precoCusto;
+	
+	private Double precoVenda;
+	
+	private Integer quantidadeEstoque;
 	
 	public ProdutoDTO(){}
 
@@ -19,7 +23,9 @@ public class ProdutoDTO implements Serializable{
 		super();
 		this.id = obj.getId();
 		this.nome = obj.getNome();
-		this.preco = obj.getPreco();
+		this.precoCusto = obj.getPrecoCusto();
+		this.precoVenda = obj.getPrecoVenda();
+		this.quantidadeEstoque = obj.getQuantidadeEstoque();
 	}
 
 	public Integer getId() {
@@ -38,14 +44,29 @@ public class ProdutoDTO implements Serializable{
 		this.nome = nome;
 	}
 
-	public Double getPreco() {
-		return preco;
+	public Double getPrecoCusto() {
+		return precoCusto;
 	}
 
-	public void setPreco(Double preco) {
-		this.preco = preco;
+	public void setPrecoCusto(Double precoCusto) {
+		this.precoCusto = precoCusto;
 	}
-	
+
+	public Double getPrecoVenda() {
+		return precoVenda;
+	}
+
+	public void setPrecoVenda(Double precoVenda) {
+		this.precoVenda = precoVenda;
+	}
+
+	public Integer getQuantidadeEstoque() {
+		return quantidadeEstoque;
+	}
+
+	public void setQuantidadeEstoque(Integer quantidadeEstoque) {
+		this.quantidadeEstoque = quantidadeEstoque;
+	}
 	
 	
 }

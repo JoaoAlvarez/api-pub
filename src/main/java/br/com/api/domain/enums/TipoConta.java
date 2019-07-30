@@ -1,15 +1,15 @@
 package br.com.api.domain.enums;
 
-public enum EstadoPagamento {
+public enum TipoConta {
 
-	PENDENTE(1,"Pendente"),
-	QUITADO(2,"Quitado"),
-	CANCELADO(3,"Parcialmente Quitado");
+	COMPRA_LIVRE(1,"Compra livre"),
+	CONTA_COMANDA(2,"Conta comanda"),
+	CONTA_MESA(3,"Conta mesa");
 	
 	private int cod;
 	private String descricao;
 	
-	private EstadoPagamento(int cod, String descricao) {
+	private TipoConta(int cod, String descricao) {
 		this.cod = cod;
 		this.descricao = descricao;
 	}
@@ -30,12 +30,12 @@ public enum EstadoPagamento {
 		this.descricao = descricao;
 	}
 	
-	public static EstadoPagamento toEnum(Integer cod) {
+	public static TipoConta toEnum(Integer cod) {
 		if(cod == null) {
 			return null;
 		}
 		
-		for(EstadoPagamento x : EstadoPagamento.values()) {
+		for(TipoConta x : TipoConta.values()) {
 			if(cod.equals(x.getCod())){
 				return x;
 			}

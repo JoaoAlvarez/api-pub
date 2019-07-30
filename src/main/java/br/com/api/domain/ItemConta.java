@@ -8,39 +8,39 @@ import javax.persistence.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class ItemPedido  implements Serializable{
+public class ItemConta  implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@JsonIgnore
 	@EmbeddedId
-	private ItemPedidoPK id = new ItemPedidoPK();
+	private ItemContaPK id = new ItemContaPK();
 	
 	private Double desconto;
 	private Integer quantidade;
 	private Double preco;
 	
-	public ItemPedido() {}
+	public ItemConta() {}
 	
-	public ItemPedido(Pedido pedido, Produto produto, Double desconto, Integer quantidade, Double preco) {
+	public ItemConta(Conta conta, Produto produto, Double desconto, Integer quantidade) {
 		super();
-		this.id.setPedido(pedido);
+		this.id.setConta(conta);
 		this.id.setProduto(produto);
 		this.desconto = desconto;
 		this.quantidade = quantidade;
-		this.preco = preco;
+		this.preco = produto.getPrecoVenda();
 	}
 	
 	public double getSubTotal() {
 		return (preco - desconto) * quantidade;
 	}
 	
-	public void setPedido(Pedido pedido) {
-		id.setPedido(pedido);
+	public void setConta(Conta conta) {
+		id.setConta(conta);
 	}
 	
 	@JsonIgnore
-	public Pedido getPedido() {
-		return id.getPedido();
+	public Conta getConta() {
+		return id.getConta();
 	}
 	
 	public Produto getProduto() {
@@ -50,11 +50,11 @@ public class ItemPedido  implements Serializable{
 	public void setProduto(Produto produto) {
 		id.setProduto(produto);
 	}
-	public ItemPedidoPK getId() {
+	public ItemContaPK getId() {
 		return id;
 	}
 
-	public void setId(ItemPedidoPK id) {
+	public void setId(ItemContaPK id) {
 		this.id = id;
 	}
 
@@ -98,7 +98,7 @@ public class ItemPedido  implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ItemPedido other = (ItemPedido) obj;
+		ItemConta other = (ItemConta) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

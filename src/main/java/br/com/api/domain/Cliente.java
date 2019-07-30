@@ -47,7 +47,7 @@ public class Cliente implements Serializable{
 	
 	@JsonIgnore
 	@OneToMany(mappedBy="cliente")
-	private List<Pedido> pedidos = new ArrayList<>();
+	private List<ContaComanda> contas = new ArrayList<>();
 
 	public Cliente() {}
 
@@ -116,12 +116,12 @@ public class Cliente implements Serializable{
 		this.email = email;
 	}
 
-	public List<Pedido> getPedidos() {
-		return pedidos;
+	public List<ContaComanda> getContas() {
+		return contas;
 	}
 
-	public void setPedidos(List<Pedido> pedidos) {
-		this.pedidos = pedidos;
+	public void setContas(List<ContaComanda> contas) {
+		this.contas = contas;
 	}
 
 	@Override

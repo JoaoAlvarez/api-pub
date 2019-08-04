@@ -8,8 +8,8 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @EnableAutoConfiguration
-@ComponentScan({"br.com.api.resources","br.com.api.services"})
-public class ApiApplication  implements CommandLineRunner{
+@ComponentScan({"br.com.api.resources","br.com.api.services","br.com.api"})
+public class ApiApplication implements CommandLineRunner{
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ApiApplication.class, args);
